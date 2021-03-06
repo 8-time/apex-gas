@@ -1,0 +1,5 @@
+.history/
+node_modules/
+.clasprc.json
+creds.json
+.clasp.json
