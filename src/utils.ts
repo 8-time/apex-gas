@@ -51,7 +51,7 @@ function saveJsonToDrive(props: object) {
 function getJsonFromDrive() {
   const files = DriveApp.getFilesByName(fileName);
   if (files.hasNext()) {
-    return JSON.stringify(files.next().getBlob().getDataAsString());
+    return JSON.stringify(JSON.parse(files.next().getBlob().getDataAsString()));
   } else {
     return JSON.stringify({});
   }
