@@ -1,5 +1,3 @@
-const fileName = "apex_data_for_https";
-
 function getElementsByTagName(
   element: GoogleAppsScript.XML_Service.Element,
   tagName: string
@@ -37,7 +35,7 @@ function getIgnioTexByHtml(response: GoogleAppsScript.URL_Fetch.HTTPResponse) {
   return el.getText();
 }
 
-function saveJsonToDrive(props: object) {
+function saveJsonToDrive(props: object, fileName: string) {
   const content = JSON.stringify(props);
 
   const files = DriveApp.getFilesByName(fileName);
@@ -48,7 +46,7 @@ function saveJsonToDrive(props: object) {
   }
 }
 
-function getJsonFromDrive() {
+function getJsonFromDrive(fileName: string) {
   const files = DriveApp.getFilesByName(fileName);
   if (files.hasNext()) {
     return JSON.stringify(JSON.parse(files.next().getBlob().getDataAsString()));

@@ -24,7 +24,7 @@ function saveDataFromIgnioHtml() {
     [sign]: getIgnioTexByHtml(responses[i]),
   }));
 
-  saveJsonToDrive(result);
+  saveJsonToDrive(result, "apex_data_for_https");
 }
 
 function saveDataFromIgnioXml() {
@@ -34,9 +34,13 @@ function saveDataFromIgnioXml() {
       contentType: "application/xml",
     }
   );
-  const xml = response.getContentText();
+  const xmlRu = response.getContentText();
+  const xmlEn = LanguageApp.translate(xmlRu, "ru", "en", {
+    contentType: "html",
+  });
 
-  saveJsonToDrive(XMLToJSON(xml));
+  saveJsonToDrive(XMLToJSON(xmlRu), "apex_data_for_https_ru");
+  saveJsonToDrive(XMLToJSON(xmlEn), "apex_data_for_https_en");
 }
 
 function grabDataFunctions() {
@@ -44,7 +48,10 @@ function grabDataFunctions() {
 }
 
 function doGet() {
-  return ContentService.createTextOutput(getJsonFromDrive()).setMimeType(
-    ContentService.MimeType.JSON
-  );
+  const ru = JSON.parse(getJsonFromDrive("apex_data_for_https_ru"));
+  const en = JSON.parse(getJsonFromDrive("apex_data_for_https_en"));
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ ru, en })
+  ).setMimeType(ContentService.MimeType.JSON);
 }
