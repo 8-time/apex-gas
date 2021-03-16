@@ -15,6 +15,10 @@ function getElementsByTagName(
   return data;
 }
 
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 function getIgnioTexByHtml(response: GoogleAppsScript.URL_Fetch.HTTPResponse) {
   const html = response.getContentText();
   const doc = XmlService.parse(html);

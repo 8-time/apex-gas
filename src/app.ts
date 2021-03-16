@@ -52,6 +52,6 @@ function doGet() {
   const en = JSON.parse(getJsonFromDrive("apex_data_for_https_en"));
 
   return ContentService.createTextOutput(
-    JSON.stringify({ ru, en })
+    JSON.stringify(!isEmpty(ru) && !isEmpty(en) ? { ru, en } : null)
   ).setMimeType(ContentService.MimeType.JSON);
 }
